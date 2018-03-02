@@ -20,6 +20,12 @@ library
     Internal
 
   default-language:    Haskell2010
+  other-extensions:    CPP MultiParamTypeClasses
+
+  if impl(ghc >= 7.4)
+    default-extensions: Trustworthy
+    if impl(ghc >= 7.10)
+      ghc-options: -fno-warn-trustworthy-safe
 
   build-depends:
       base               >=4.3      && <4.12
