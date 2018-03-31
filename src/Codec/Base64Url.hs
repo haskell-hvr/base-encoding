@@ -247,18 +247,18 @@ instance Decode SBS.ShortByteString BB.Builder where
 
 ----
 
-instance Decode BB.Builder BS.L.ByteString where
-  decode = decode . BB.toLazyByteString
-
-instance Decode BB.Builder BS.ByteString where
-  decode = decode . BB.toLazyByteString
-
 #if MIN_VERSION_bytestring(0,10,4)
 instance Decode BB.Builder SBS.ShortByteString where
   decode = decode . BB.toLazyByteString
 #endif
 
 #if MIN_VERSION_bytestring(0,10,0)
+instance Decode BB.Builder BS.L.ByteString where
+  decode = decode . BB.toLazyByteString
+
+instance Decode BB.Builder BS.ByteString where
+  decode = decode . BB.toLazyByteString
+
 instance Decode BB.Builder BB.Builder where
   decode = decode . BB.toLazyByteString
 #endif
