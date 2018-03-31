@@ -2,6 +2,28 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 
 -- | This module provides access to the \"base16\" binary-to-text encoding as defined by [RFC 4648](https://tools.ietf.org/html/rfc4648).
+--
+-- This module is intended to be imported @qualified@, e.g.
+--
+-- > import qualified Codec.Base16 as B16
+--
+-- If you want to explictly specify which 'Encode' and 'Decode' typeclass instance is used, you can use plain Haskell2010 type-signature annotations, e.g.
+--
+-- >>> (B16.encode :: ByteString -> Text) "\202\254"
+-- "cafe"
+--
+-- >>> (B16.decode :: Text -> Either String ShortByteString) "CaFe"
+-- Right "\202\254"
+--
+-- Alternatively, starting with GHC 8.0.1, you can also use the [TypeApplications language extension](https://downloads.haskell.org/~ghc/8.4.1/docs/html/users_guide/glasgow_exts.html#ghc-flag--XTypeApplications):
+--
+-- >>> B16.encode @ShortByteString @Text "\xFF\239\0"
+-- "ffef00"
+--
+-- >>> B16.decode @Text @ShortByteString ""
+-- Right ""
+--
+-- @since 0.1.0.0
 module Codec.Base16
     ( Encode(encode)
     , Decode(decode)

@@ -1,5 +1,7 @@
+cabal-version:       1.12
 name:                base-encoding
 version:             0.1.0.0
+
 synopsis:            Binary-to-text encodings (e.g. base64)
 license:             BSD3
 license-file:        LICENSE
@@ -7,7 +9,10 @@ author:              Herbert Valerio Riedel
 maintainer:          hvr@gnu.org
 category:            Text
 build-type:          Simple
-cabal-version:       >=1.10
+description:
+  This package provides a simple and convenient API to encode and
+  decode binary data in the popular binary-to-text \"base\" encoding
+  family as described in [RFC4648](https://tools.ietf.org/html/rfc4648) et al.
 
 library
   hs-source-dirs:      src

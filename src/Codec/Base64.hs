@@ -2,6 +2,28 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 
 -- | This module provides access to the \"base64\" binary-to-text encoding as defined by [RFC 4648](https://tools.ietf.org/html/rfc4648).
+--
+-- This module is intended to be imported @qualified@, e.g.
+--
+-- > import qualified Codec.Base64 as B64
+--
+-- If you want to explictly specify which 'Encode' and 'Decode' typeclass instance is used, you can use plain Haskell2010 type-signature annotations, e.g.
+--
+-- >>> (B64.encode :: ByteString -> Text) "\x00\x00"
+-- "AAA="
+--
+-- >>> (B64.decode :: Text -> Either String ShortByteString) "NDoyMA=="
+-- Right "4:20"
+--
+-- Alternatively, starting with GHC 8.0.1, you can also use the [TypeApplications language extension](https://downloads.haskell.org/~ghc/8.4.1/docs/html/users_guide/glasgow_exts.html#ghc-flag--XTypeApplications):
+--
+-- >>> B64.encode @ShortByteString @Text "\xFF\239"
+-- "/+8="
+--
+-- >>> B64.decode @Text @ShortByteString "/+8="
+-- Right "\255\239"
+--
+-- @since 0.1.0.0
 module Codec.Base64
     ( Encode(encode)
     , Decode(decode)
