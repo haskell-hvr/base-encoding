@@ -12,7 +12,13 @@ build-type:          Simple
 description:
   This package provides a simple and convenient API to encode and
   decode binary data in the popular binary-to-text \"base\" encoding
-  family as described in [RFC4648](https://tools.ietf.org/html/rfc4648) et al.
+  family as described in [RFC 4648](https://tools.ietf.org/html/rfc4648) et al.
+  .
+  Currently, the following encodings are supported:
+  .
+  - base16 (RFC4648)
+  - base64 (RFC4648)
+  - base64url (RFC4648)
 
 library
   hs-source-dirs:      src
@@ -20,6 +26,7 @@ library
   exposed-modules:
     Codec.Base16
     Codec.Base64
+    Codec.Base64Url
 
   other-modules:
     Internal
