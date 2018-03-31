@@ -6,6 +6,7 @@ synopsis:            Binary-to-text encodings (e.g. base64)
 license:             BSD3
 license-file:        LICENSE
 author:              Herbert Valerio Riedel
+bug-reports:         https://github.com/hvr/base-encoding/issues
 maintainer:          hvr@gnu.org
 category:            Text
 build-type:          Simple
@@ -19,6 +20,10 @@ description:
   - base16 (RFC4648)
   - base64 (RFC4648)
   - base64url (RFC4648)
+
+source-repository head
+  type:     git
+  location: https://github.com/hvr/base-encoding
 
 library
   hs-source-dirs:      src
