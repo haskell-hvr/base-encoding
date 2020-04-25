@@ -1,30 +1,30 @@
 {-# LANGUAGE CPP                   #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 
--- | This module provides access to the /padded/ \"base64url\" binary-to-text encoding as defined by [RFC 4648](https://tools.ietf.org/html/rfc4648). See also "Codec.Base64Url.Unpadded" for the /unpadded/ encoding variant.
+-- | This module provides access to the /unpadded/ \"base64url\" binary-to-text encoding as defined by [RFC 4648](https://tools.ietf.org/html/rfc4648). See also "Codec.Base64Url" for the /padded/ encoding variant.
 --
 -- This module is intended to be imported @qualified@, e.g.
 --
--- > import qualified Codec.Base64Url as B64
+-- > import qualified Codec.Base64Url.Unpadded as B64
 --
 -- If you want to explictly specify which 'Encode' and 'Decode' typeclass instance is used, you can use plain Haskell2010 type-signature annotations, e.g.
 --
 -- >>> (B64.encode :: ByteString -> Text) "\x00\x00"
--- "AAA="
+-- "AAA"
 --
--- >>> (B64.decode :: Text -> Either String ShortByteString) "NDoyMA=="
+-- >>> (B64.decode :: Text -> Either String ShortByteString) "NDoyMA"
 -- Right "4:20"
 --
 -- Alternatively, starting with GHC 8.0.1, you can also use the [TypeApplications language extension](https://downloads.haskell.org/~ghc/8.4.1/docs/html/users_guide/glasgow_exts.html#ghc-flag--XTypeApplications):
 --
 -- >>> B64.encode @ShortByteString @Text "\xFF\239"
--- "_-8="
+-- "_-8"
 --
--- >>> B64.decode @Text @ShortByteString "_-8="
+-- >>> B64.decode @Text @ShortByteString "_-8"
 -- Right "\255\239"
 --
--- @since 0.1.0.0
-module Codec.Base64Url
+-- @since 0.2.0.0
+module Codec.Base64Url.Unpadded
     ( Encode(encode)
     , Decode(decode)
     ) where
@@ -56,28 +56,36 @@ import           Internal
 -- primitives
 
 decodeBs2Bs :: BS.ByteString -> Either String BS.ByteString
-decodeBs2Bs = B64.decodePadded
+decodeBs2Bs = B64.decodeUnpadded
 
 decodeBsL2BsL :: BS.L.ByteString -> Either String BS.L.ByteString
-decodeBsL2BsL = B64.L.decodePadded
+decodeBsL2BsL = B64.L.decodeUnpadded
 
 encodeBs2Bs :: BS.ByteString -> BS.ByteString
-encodeBs2Bs = B64.encode
+encodeBs2Bs = B64.encodeUnpadded
 
 encodeBsL2BsL :: BS.L.ByteString -> BS.L.ByteString
-encodeBsL2BsL = B64.L.encode
+encodeBsL2BsL = B64.L.encodeUnpadded
 
 ----------------------------------------------------------------------------
 -- exposed API
 
--- | Typeclass representing types for which a binary-to-text /padded/ @base64url@ encoding is defined
+-- | Typeclass representing types for which a binary-to-text /unpadded/ @base64url@ encoding is defined
+--
+-- @since 0.2.0.0
 class Encode bin txt where
-  -- | Encode binary data using /padded/ @base64url@ text encoding
+  -- | Encode binary data using /unpadded/ @base64url@ text encoding
+  --
+  -- @since 0.2.0.0
   encode :: bin -> txt
 
--- | Typeclass representing types for which a text-to-binary /padded/ @base64url@ decoding is defined
+-- | Typeclass representing types for which a text-to-binary /unpadded/ @base64url@ decoding is defined
+--
+-- @since 0.2.0.0
 class Decode txt bin where
-  -- | Decode binary data encoded textually as /padded/ @base64url@
+  -- | Decode binary data encoded textually as /unpadded/ @base64url@
+  --
+  -- @since 0.2.0.0
   decode :: txt -> Either String bin
 
 ----------------------------------------------------------------------------
