@@ -56,17 +56,25 @@ import           Internal
 
 decodeBs2Bs :: BS.ByteString -> Either String BS.ByteString
 decodeBs2Bs txt
+#if MIN_VERSION_base16_bytestring(1,0,0)
+  = B16.decode txt
+#else
   | BS.null rest = Right $! b
   | otherwise    = Left ("invalid base16 encoding near offset " ++ show (2 * BS.length b))
   where
     (b,rest) = B16.decode txt
+#endif
 
 decodeBsL2BsL :: BS.L.ByteString -> Either String BS.L.ByteString
 decodeBsL2BsL txt
+#if MIN_VERSION_base16_bytestring(1,0,0)
+  = B16.L.decode txt
+#else
   | BS.L.null rest = Right $! b
   | otherwise      = Left ("invalid base16 encoding near offset " ++ show (2 * BS.L.length b))
   where
     (b,rest) = B16.L.decode txt
+#endif
 
 encodeBs2Bs :: BS.ByteString -> BS.ByteString
 encodeBs2Bs = B16.encode
